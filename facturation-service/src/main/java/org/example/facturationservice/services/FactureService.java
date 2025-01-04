@@ -1,6 +1,7 @@
 package org.example.facturationservice.services;
 
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.example.facturationservice.entities.Facture;
 import org.example.facturationservice.entities.Paiement;
@@ -27,19 +28,21 @@ public class FactureService {
 
     // Add a new facture
     public Facture addFacture(Facture facture) {
-        if (facture.getListPaiement() != null) {
-            for (Paiement paiement : facture.getListPaiement()) {
-                paiement.setFacture(facture);
-            }
-        }
         return factureRepository.save(facture);
+    }
+
+    // Add a Paiement to a Facture
+    public Facture addPaiementToFacture(Long factureId, Paiement paiement) {
+        Facture facture = getFactureById(factureId);
+        facture.addPaiement(paiement);
+        paiementRepository.save(paiement); // Save the Paiement
+        return factureRepository.save(facture); // Save the Facture with updated montantPaye
     }
 
     // Update an existing facture
     public Facture updateFacture(Long id, Facture updatedFacture) {
         Facture existingFacture = getFactureById(id);
         existingFacture.setMontantTotal(updatedFacture.getMontantTotal());
-        existingFacture.setMontantPaye(updatedFacture.getMontantPaye());
         return factureRepository.save(existingFacture);
     }
 

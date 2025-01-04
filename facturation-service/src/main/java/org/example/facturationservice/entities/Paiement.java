@@ -22,5 +22,6 @@ public class Paiement {
     private LocalDateTime datePaiement;
     private BigDecimal montant;
     @ManyToOne
+    @JoinColumn(name = "facture_id")
     private Facture facture;
 }

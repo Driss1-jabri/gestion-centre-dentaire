@@ -6,20 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 @Entity
-@Table(name = "traitements")
+@Table(name = "ordonnances")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FicheTraitement {
+public class Ordonnance {
     @Id
     private Long id;
-    private String nomDent; // Correction du nom
-    private BigDecimal montant;
     private String description;
-    @ManyToOne
-    @JoinColumn(name = "consultation_id", nullable = false)
+    @OneToOne(mappedBy = "ordonnance", cascade = CascadeType.ALL, orphanRemoval = true)
     private Consultation consultation;
 }

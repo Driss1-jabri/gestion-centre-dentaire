@@ -1,8 +1,6 @@
 package org.example.consultationservice.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +10,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name="consultations")
+@Table(name = "consultations")
 @Data
 @Builder
 @NoArgsConstructor
@@ -20,10 +18,12 @@ import java.util.Set;
 public class Consultation {
     @Id
     private Long id;
-    private String Motife;
-    private Long redezvousid;
-    private Long ordonnanceId;
-    private Set<FicheTraitement> fichesdeTraitement;
-
-
+    private String motif; // Correction du nom
+    @OneToOne
+    @JoinColumn(name = "ordonnance_id", referencedColumnName = "id")
+    private Ordonnance ordonnance;
+    @OneToOne(mappedBy = "consultation", cascade = CascadeType.ALL)
+    private RendezVous rendezVous;
+    @OneToMany(mappedBy = "consultation", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<FicheTraitement> fichesDeTraitement; // Correction du nom
 }

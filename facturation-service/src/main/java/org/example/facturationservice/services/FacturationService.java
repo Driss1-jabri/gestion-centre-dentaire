@@ -1,7 +1,5 @@
 package org.example.facturationservice.services;
 
-import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.example.facturationservice.entities.Facture;
 import org.example.facturationservice.entities.Paiement;
@@ -9,9 +7,11 @@ import org.example.facturationservice.repositories.FactureRepository;
 import org.example.facturationservice.repositories.PaiementRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class FactureService {
+public class FacturationService {
     private final FactureRepository factureRepository;
     private final PaiementRepository paiementRepository;
 
@@ -35,8 +35,24 @@ public class FactureService {
     public Facture addPaiementToFacture(Long factureId, Paiement paiement) {
         Facture facture = getFactureById(factureId);
         facture.addPaiement(paiement);
+        paiement.setFacture(facture); // Set the facture in the paiement
         paiementRepository.save(paiement); // Save the Paiement
-        return factureRepository.save(facture); // Save the Facture with updated montantPaye
+        return factureRepository.save(facture); // Save the Facture with updated payments
+    }
+
+    // Update an existing paiement
+    public Paiement updatePaiement(Long paiementId, Paiement updatedPaiement) {
+        Paiement existingPaiement = paiementRepository.findById(paiementId)
+                .orElseThrow(() -> new RuntimeException("Paiement not found"));
+        existingPaiement.setMontant(updatedPaiement.getMontant());
+        existingPaiement.setDatePaiement(updatedPaiement.getDatePaiement());
+        existingPaiement.setModePaiement(updatedPaiement.getModePaiement());
+        return paiementRepository.save(existingPaiement);
+    }
+
+    // Delete a paiement by ID
+    public void deletePaiement(Long paiementId) {
+        paiementRepository.deleteById(paiementId);
     }
 
     // Update an existing facture

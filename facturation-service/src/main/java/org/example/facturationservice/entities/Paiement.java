@@ -20,6 +20,10 @@ public class Paiement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime datePaiement;
+
+    @Enumerated(EnumType.STRING)
+    private MODEPAIEMENT modePaiement;
+
     private BigDecimal montant;
     @ManyToOne
     @JoinColumn(name = "facture_id")

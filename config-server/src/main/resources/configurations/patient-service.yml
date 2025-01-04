@@ -13,7 +13,7 @@ spring:
     config:
       discovery:
         enabled: true
-      enabled: false
+      enabled: true
 
 server:
   port: 8081

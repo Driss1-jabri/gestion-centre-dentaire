@@ -2,7 +2,7 @@ spring:
   datasource:
     username: root
     password:
-    url: jdbc:mysql://localhost:3306/consultation-db?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/traitement-db?createDatabaseIfNotExist=true
   jpa:
     hibernate:
       ddl-auto: update
@@ -16,7 +16,7 @@ spring:
       enabled: true
 
 server:
-  port: 8082
+  port: 8086
 
 eureka:
   client:

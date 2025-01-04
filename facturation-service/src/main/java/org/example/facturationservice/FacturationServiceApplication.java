@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FacturationServiceApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(FacturationServiceApplication.class, args);
+    SpringApplication.run( FacturationServiceApplication.class , args);
   }
 
 }

@@ -27,7 +27,7 @@ public class Patient {
   private String phone;
   private String email;
 
-  //@OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
+  @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL)
   private DossierMedical dossierMedical;
 
 

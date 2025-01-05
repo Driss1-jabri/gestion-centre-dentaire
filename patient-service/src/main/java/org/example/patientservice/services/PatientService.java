@@ -9,10 +9,14 @@ import org.example.patientservice.repositories.PatientRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+
 public class PatientService {
   private final PatientRepository patientRepository;
   private final DossierMedicalRepository dossierMedicalRepository;
+  public PatientService(PatientRepository patientRepository, DossierMedicalRepository dossierMedicalRepository) {
+    this.patientRepository = patientRepository;
+    this.dossierMedicalRepository = dossierMedicalRepository;
+  }
 
   public List<Patient> getAllPatients() {
     return patientRepository.findAll();

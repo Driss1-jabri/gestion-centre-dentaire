@@ -6,22 +6,23 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+import lombok.Data;
+
+@Data
 @Entity
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class DossierMedical {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private String antecedentsMedicaux;
+  private String medicalHistory;
+  private String currentMedications;
 
   @OneToOne
   @JoinColumn(name = "patient_id")
   private Patient patient;
 
-
+  public void setPatient(Patient patient) {
+    this.patient = patient;
+  }
 }

@@ -1,10 +1,12 @@
 server:
   port: 9999
 spring:
+  profiles:
+    active: native
   application:
     name: config-server
   cloud:
     config:
       server:
-        git:
-          uri: spring.cloud.config.server.git.uri=https://github.com/mohamedYoussfi/config-ecom-app
+        native:
+          search-locations: classpath:/configurations

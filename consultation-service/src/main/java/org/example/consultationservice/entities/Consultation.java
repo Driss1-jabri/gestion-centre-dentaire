@@ -14,7 +14,7 @@ import java.util.Set;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
+
 public class Consultation {
     @Id
     private Long id;
@@ -25,5 +25,54 @@ public class Consultation {
     @OneToOne(mappedBy = "consultation", cascade = CascadeType.ALL)
     private RendezVous rendezVous;
     @OneToMany(mappedBy = "consultation", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<FicheTraitement> fichesDeTraitement; // Correction du nom
+    private Set<FicheTraitement> fichesDeTraitement;
+    // Correction du nom
+
+    public Consultation(Long id, String motif, Ordonnance ordonnance, RendezVous rendezVous, Set<FicheTraitement> fichesDeTraitement) {
+        this.id = id;
+        this.motif = motif;
+        this.ordonnance = ordonnance;
+        this.rendezVous = rendezVous;
+        this.fichesDeTraitement = fichesDeTraitement;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getMotif() {
+        return motif;
+    }
+
+    public void setMotif(String motif) {
+        this.motif = motif;
+    }
+
+    public Ordonnance getOrdonnance() {
+        return ordonnance;
+    }
+
+    public void setOrdonnance(Ordonnance ordonnance) {
+        this.ordonnance = ordonnance;
+    }
+
+    public RendezVous getRendezVous() {
+        return rendezVous;
+    }
+
+    public void setRendezVous(RendezVous rendezVous) {
+        this.rendezVous = rendezVous;
+    }
+
+    public Set<FicheTraitement> getFichesDeTraitement() {
+        return fichesDeTraitement;
+    }
+
+    public void setFichesDeTraitement(Set<FicheTraitement> fichesDeTraitement) {
+        this.fichesDeTraitement = fichesDeTraitement;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

@@ -20,12 +20,13 @@ public class PatientController {
   private final PatientService patientService;
 
   public PatientController(PatientService patientService) {
+
     this.patientService = patientService;
   }
 
   @GetMapping
-  public List<Patient> getAllPatients() {
-    return patientService.getAllPatients();
+  public ResponseEntity<List<Patient>> getAllPatients() {
+    return ResponseEntity.ok( patientService.getAllPatients());
   }
 
   @GetMapping("/{id}")

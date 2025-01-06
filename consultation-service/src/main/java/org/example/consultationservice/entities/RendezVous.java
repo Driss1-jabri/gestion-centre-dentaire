@@ -1,5 +1,6 @@
 package org.example.consultationservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "rendezvous")
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class RendezVous {
     @Id
     private Long id;
@@ -23,5 +23,76 @@ public class RendezVous {
     private Long idPatient;
     @OneToOne
     @JoinColumn(name = "consultation_id", referencedColumnName = "id")
+    @JsonIgnore
     private Consultation consultation;
+    @Transient
+    private PatientRequest patientRequest;
+
+    public PatientRequest getPatientRequest() {
+        return patientRequest;
+    }
+
+    public void setPatientRequest(PatientRequest patientRequest) {
+        this.patientRequest = patientRequest;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public byte getHeure() {
+        return heure;
+    }
+
+    public void setHeure(byte heure) {
+        this.heure = heure;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Long getIdPatient() {
+        return idPatient;
+    }
+
+    public void setIdPatient(Long idPatient) {
+        this.idPatient = idPatient;
+    }
+
+    public Consultation getConsultation() {
+        return consultation;
+    }
+
+    public void setConsultation(Consultation consultation) {
+        this.consultation = consultation;
+    }
+
+    public RendezVous() {
+    }
+
+    public RendezVous(Long id, LocalDate date, byte heure, String status, Long idPatient, Consultation consultation) {
+        this.id = id;
+        this.date = date;
+        this.heure = heure;
+        this.status = status;
+        this.idPatient = idPatient;
+        this.consultation = consultation;
+    }
 }

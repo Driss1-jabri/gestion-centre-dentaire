@@ -1,5 +1,6 @@
 package org.example.consultationservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,15 +11,16 @@ import lombok.NoArgsConstructor;
 @Table(name = "ordonnances")
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class Ordonnance {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
     @OneToOne(mappedBy = "ordonnance", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Consultation consultation;
 
     public Long getId() {

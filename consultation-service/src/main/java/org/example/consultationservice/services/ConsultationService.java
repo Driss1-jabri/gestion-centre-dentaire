@@ -2,6 +2,7 @@ package org.example.consultationservice.services;
 
 import lombok.RequiredArgsConstructor;
 import org.example.consultationservice.entities.Consultation;
+import org.example.consultationservice.entities.RendezVous;
 import org.example.consultationservice.repository.ConsultationRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 public class ConsultationService {
     private final ConsultationRepository consultationRepository;
-
+    private final RendezvousService rdService;
     // CREATE
     public Consultation createConsultation(Consultation consultation) {
         return consultationRepository.save(consultation);
@@ -29,12 +30,15 @@ public class ConsultationService {
     }
 
     // UPDATE
-    public Consultation updateConsultation(Long id, Consultation updatedConsultation) {
+    public Consultation updateConsultation(Long id, Consultation updatedConsultation ) {
+        RendezVous rd= rdService.getRendezVousById(updatedConsultation.getRendezVous().getId()).orElseThrow(
+                ()-> new RuntimeException("vous n'etes pas en rendez vous")
+        );
         return consultationRepository.findById(id)
                 .map(existingConsultation -> {
                     existingConsultation.setMotif(updatedConsultation.getMotif());
                     existingConsultation.setOrdonnance(updatedConsultation.getOrdonnance());
-                    existingConsultation.setRendezVous(updatedConsultation.getRendezVous());
+                    existingConsultation.setRendezVous(rd);
                     existingConsultation.setFichesDeTraitement(updatedConsultation.getFichesDeTraitement());
                     return consultationRepository.save(existingConsultation);
                 })
@@ -49,7 +53,9 @@ public class ConsultationService {
         consultationRepository.deleteById(id);
     }
 
-    public ConsultationService(ConsultationRepository consultationRepository) {
+    public ConsultationService(ConsultationRepository consultationRepository,
+                               RendezvousService rdService) {
         this.consultationRepository = consultationRepository;
+        this.rdService=rdService;
     }
 }

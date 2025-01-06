@@ -1,5 +1,6 @@
 package org.example.consultationservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "rendezvous")
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class RendezVous {
     @Id
     private Long id;
@@ -23,6 +23,7 @@ public class RendezVous {
     private Long idPatient;
     @OneToOne
     @JoinColumn(name = "consultation_id", referencedColumnName = "id")
+    @JsonIgnore
     private Consultation consultation;
 
     public Long getId() {

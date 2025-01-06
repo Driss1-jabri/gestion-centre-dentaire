@@ -1,5 +1,6 @@
 package org.example.consultationservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +14,7 @@ import java.util.Set;
 @Table(name = "consultations")
 @Data
 @Builder
-@NoArgsConstructor
+
 
 public class Consultation {
     @Id
@@ -24,7 +25,8 @@ public class Consultation {
     private Ordonnance ordonnance;
     @OneToOne(mappedBy = "consultation", cascade = CascadeType.ALL)
     private RendezVous rendezVous;
-    @OneToMany(mappedBy = "consultation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "consultation", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Set<FicheTraitement> fichesDeTraitement;
     // Correction du nom
 
@@ -70,6 +72,9 @@ public class Consultation {
 
     public void setFichesDeTraitement(Set<FicheTraitement> fichesDeTraitement) {
         this.fichesDeTraitement = fichesDeTraitement;
+    }
+
+    public Consultation() {
     }
 
     public Long getId() {

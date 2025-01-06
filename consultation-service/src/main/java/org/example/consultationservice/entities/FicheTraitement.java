@@ -1,5 +1,7 @@
 package org.example.consultationservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +13,8 @@ import java.math.BigDecimal;
 @Table(name = "traitements")
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+
+
 public class FicheTraitement {
     @Id
     private Long id;
@@ -21,7 +23,11 @@ public class FicheTraitement {
     private String description;
     @ManyToOne
     @JoinColumn(name = "consultation_id", nullable = false)
+    @JsonBackReference
     private Consultation consultation;
+
+    public FicheTraitement() {
+    }
 
     public FicheTraitement(Long id, String nomDent, BigDecimal montant, String description, Consultation consultation) {
         this.id = id;

@@ -25,6 +25,16 @@ public class RendezVous {
     @JoinColumn(name = "consultation_id", referencedColumnName = "id")
     @JsonIgnore
     private Consultation consultation;
+    @Transient
+    private PatientRequest patientRequest;
+
+    public PatientRequest getPatientRequest() {
+        return patientRequest;
+    }
+
+    public void setPatientRequest(PatientRequest patientRequest) {
+        this.patientRequest = patientRequest;
+    }
 
     public Long getId() {
         return id;

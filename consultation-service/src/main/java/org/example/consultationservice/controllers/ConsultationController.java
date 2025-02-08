@@ -5,12 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.example.consultationservice.entities.Consultation;
+import org.example.consultationservice.entities.ConsultationRequest;
+import org.example.consultationservice.mappers.ConsultationMapper;
+import org.example.consultationservice.mappers.ConsultationMapperImpt;
 import org.example.consultationservice.services.ConsultationService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("consultation")
@@ -32,8 +36,9 @@ public class ConsultationController {
 
     // READ
     @GetMapping
-    public ResponseEntity<List<Consultation>> getAllConsultations() {
-        return ResponseEntity.ok(consultationService.getAllConsultations());
+    public ResponseEntity<List<ConsultationRequest>> getAllConsultations(ConsultationMapperImpt consultationMapper) {
+        return ResponseEntity.ok(consultationService.
+                getAllConsultations().stream().map(consultationMapper::toDto).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")

@@ -20,19 +20,22 @@ public class ConsultationService {
     private final RendezvousService rdService;
     private final PatientRestClient patientRestClient;
     private final FacturationRestClient facturationRestClient;
+    private final  ConsultationMapperImpt consMapper;
     public ConsultationService(
             ConsultationRepository consultationRepository,
             RendezvousService rdService,
             PatientRestClient patientRestClient,
-            FacturationRestClient facturationRestClient
+            FacturationRestClient facturationRestClient,
+            ConsultationMapperImpt consMapper
                                ) {
         this.consultationRepository = consultationRepository;
         this.rdService=rdService;
         this.patientRestClient=patientRestClient;
         this.facturationRestClient=facturationRestClient;
+        this.consMapper=consMapper;
     }
     // CREATE
-    public Consultation createConsultation(Consultation consultation,ConsultationMapperImpt consMapper) {
+    public Consultation createConsultation(Consultation consultation) {
         Consultation consultationDB=consultationRepository.save(consultation);
         facturationRestClient.createFacture(consMapper.toDto(consultationDB));
         return consultationDB;

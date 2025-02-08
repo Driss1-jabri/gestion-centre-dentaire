@@ -3,7 +3,10 @@ package org.example.consultationservice.mappers;
 import org.example.consultationservice.entities.*;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 @Component
 
 public class ConsultationMapperImpt {
@@ -29,7 +32,11 @@ public class ConsultationMapperImpt {
                 consultation.getId(),
                 consultation.getMotif(),
                 consultation.getOrdonnance() != null ? consultation.getOrdonnance().getId() : null,
-                consultation.getRendezVous() != null ? consultation.getRendezVous().getId() : null
+                consultation.getRendezVous() != null ? consultation.getRendezVous().getId() : null,
+                (consultation.getFichesDeTraitement()==null)?BigDecimal.ZERO:
+                consultation.getFichesDeTraitement().stream().map(
+                    FicheTraitement::getMontant
+                ).reduce(BigDecimal.ZERO, BigDecimal::add)
         );
     }
 }

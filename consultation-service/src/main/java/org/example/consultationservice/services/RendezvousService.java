@@ -1,7 +1,6 @@
 package org.example.consultationservice.services;
 
-import lombok.RequiredArgsConstructor;
-import org.example.consultationservice.controllers.feign.PatientRestClient;
+import org.example.consultationservice.feign.PatientRestClient;
 import org.example.consultationservice.entities.PatientRequest;
 import org.example.consultationservice.repository.Rendezvousrepository;
 import org.example.consultationservice.entities.RendezVous;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 
@@ -49,9 +47,11 @@ public class RendezvousService {
     }
     public List<RendezVous> getAllRendezVous() {
         List<RendezVous> rds = rendezVousRepository.findAll();
+        rds.stream().forEach(System.out::println);
 
         // Boucle pour récupérer et ajouter les informations du patient pour chaque rendez-vous
         for (RendezVous rdv : rds) {
+            System.out.println(rdv.getIdPatient());
             // Vérification de l'existence du patient via le service PatientRestClient
             PatientRequest patient = verifyPatientExistence(rdv.getIdPatient());
 
@@ -82,13 +82,13 @@ public class RendezvousService {
         return rendezVousRepository.findById(id)
                 .map(existingRendezVous -> {
                     // Vérification de l'existence du patient avant de mettre à jour le rendez-vous
-                    verifyPatientExistence(updatedRendezVous.getIdPatient());
+                    //PatientRequest rs=verifyPatientExistence(updatedRendezVous.getIdPatient());
 
-                    existingRendezVous.setDate(updatedRendezVous.getDate());
-                    existingRendezVous.setHeure(updatedRendezVous.getHeure());
-                    existingRendezVous.setStatus(updatedRendezVous.getStatus());
-                    existingRendezVous.setIdPatient(updatedRendezVous.getIdPatient());
-                    existingRendezVous.setConsultation(updatedRendezVous.getConsultation());
+                    existingRendezVous.setDate((updatedRendezVous.getDate()!=null)? updatedRendezVous.getDate():existingRendezVous.getDate() );
+                    existingRendezVous.setHeure(updatedRendezVous.getHeure()!=0?updatedRendezVous.getHeure():existingRendezVous.getHeure());
+                    existingRendezVous.setStatus(updatedRendezVous.getStatus()!=null? updatedRendezVous.getStatus() : existingRendezVous.getStatus());
+                    existingRendezVous.setIdPatient(updatedRendezVous.getIdPatient()!=null? updatedRendezVous.getIdPatient() : existingRendezVous.getIdPatient());
+                    existingRendezVous.setConsultation(updatedRendezVous.getConsultation()!=null?updatedRendezVous.getConsultation():existingRendezVous.getConsultation());
 
                     return rendezVousRepository.save(existingRendezVous);
                 })
@@ -104,7 +104,7 @@ public class RendezvousService {
                 .orElseThrow(() -> new RuntimeException("Rendez-vous non trouvé avec ID : " + id));
 
         // Vérification de l'existence du patient avant la suppression
-        verifyPatientExistence(rendezVous.getIdPatient());
+         verifyPatientExistence(rendezVous.getIdPatient());
 
         rendezVousRepository.deleteById(id);
     }
@@ -112,7 +112,8 @@ public class RendezvousService {
     // Méthode pour vérifier l'existence du patient
     private PatientRequest verifyPatientExistence(Long patientId) {
         try {
-            PatientRequest patientDb = patientRestClient.getPatientById(patientId).getBody();
+            var patientDb = patientRestClient.getPatientById(patientId).getBody();
+            System.out.println(patientDb.getEmail());
             if (patientDb == null) {
                 throw new RuntimeException("Patient non trouvé pour l'ID : " + patientId);
             }

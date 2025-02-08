@@ -12,8 +12,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "rendezvous")
 @Data
-@Builder
-
 public class RendezVous {
     @Id
     private Long id;
@@ -87,12 +85,15 @@ public class RendezVous {
     public RendezVous() {
     }
 
-    public RendezVous(Long id, LocalDate date, byte heure, String status, Long idPatient, Consultation consultation) {
+    public RendezVous(Long id, LocalDate date, byte heure, String status, Long idPatient, Consultation consultation, PatientRequest patientRequest) {
         this.id = id;
         this.date = date;
         this.heure = heure;
         this.status = status;
         this.idPatient = idPatient;
         this.consultation = consultation;
+        this.patientRequest = patientRequest;
     }
+
+
 }

@@ -1,22 +1,31 @@
 package org.example.consultationservice.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.example.consultationservice.entities.PatientRequest;
 import org.example.consultationservice.entities.RendezVous;
+import org.example.consultationservice.feign.PatientRestClient;
 import org.example.consultationservice.services.RendezvousService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Random;
+import java.util.random.RandomGenerator;
 
 @RestController
-@RequestMapping("rendezvous")
+@RequestMapping("api/rendezvous")
 
 public class RendezvousController {
 
     private final RendezvousService rendezVousService;
+    private final PatientRestClient patientRestClient;
 
-    public RendezvousController(RendezvousService rendezVousService) {
+    public RendezvousController(
+            RendezvousService rendezVousService,
+            PatientRestClient patientRestClient
+                                ) {
         this.rendezVousService = rendezVousService;
+        this.patientRestClient=patientRestClient;
     }
 
     // CREATE
@@ -49,5 +58,11 @@ public class RendezvousController {
     public ResponseEntity<Void> deleteRendezVous(@PathVariable Long id) {
         rendezVousService.deleteRendezVous(id);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/test")
+    public PatientRequest getpatient(){
+
+        return patientRestClient.getPati().getBody();
+
     }
 }

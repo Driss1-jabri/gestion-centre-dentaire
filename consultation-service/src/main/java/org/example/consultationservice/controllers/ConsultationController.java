@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("consultation")
-@AllArgsConstructor
+
 
 public class ConsultationController {
 

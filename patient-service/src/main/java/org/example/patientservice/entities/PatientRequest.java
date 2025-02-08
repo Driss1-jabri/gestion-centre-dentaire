@@ -1,4 +1,5 @@
-package org.example.consultationservice.entities;
+package org.example.patientservice.entities;
+
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -8,7 +9,7 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+
 public class PatientRequest {
     private Long id;
     private String firstName;
@@ -37,67 +38,63 @@ public class PatientRequest {
         return id;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public DossierMedical getDossierMedical() {
-        return dossierMedical;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public int getAge() {
+        return age;
     }
 
     public void setAge(int age) {
         this.age = age;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setDossierMedical(DossierMedical dossierMedical) {
-        this.dossierMedical = dossierMedical;
+    public DossierMedical getDossierMedical() {
+        return dossierMedical;
     }
 
-    public PatientRequest(int age) {
-        this.age = age;
+    public void setDossierMedical(DossierMedical dossierMedical) {
+        this.dossierMedical = dossierMedical;
     }
 }

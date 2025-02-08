@@ -14,8 +14,6 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "rendezvous")
 @Data
-@Builder
-
 public class RendezVous {
 
     @Id
@@ -23,7 +21,7 @@ public class RendezVous {
     private Long id;
 
     private LocalDate date;
-    private LocalTime heure; // Peut être remplacé par LocalTime si nécessaire
+    private byte heure; // Peut être remplacé par LocalTime si nécessaire
     private String status;
     private Long idPatient;
     @OneToOne
@@ -57,11 +55,11 @@ public class RendezVous {
         this.date = date;
     }
 
-    public LocalTime getHeure() {
+    public byte getHeure() {
         return heure;
     }
 
-    public void setHeure(LocalTime heure) {
+    public void setHeure(byte heure) {
         this.heure = heure;
     }
 
@@ -92,12 +90,16 @@ public class RendezVous {
     public RendezVous() {
     }
 
-    public RendezVous(Long id, LocalDate date, LocalTime heure, String status, Long idPatient, Consultation consultation) {
+
+    public RendezVous(Long id, LocalDate date, byte heure, String status, Long idPatient, Consultation consultation, PatientRequest patientRequest) {
         this.id = id;
         this.date = date;
         this.heure = heure;
         this.status = status;
         this.idPatient = idPatient;
         this.consultation = consultation;
+        this.patientRequest = patientRequest;
     }
+
+
 }

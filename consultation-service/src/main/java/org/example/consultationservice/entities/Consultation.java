@@ -12,10 +12,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "consultations")
-@Data
-@Builder
-
-
 public class Consultation {
     @Id
     private Long id;

@@ -9,16 +9,21 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 @Entity
 @Table(name = "rendezvous")
 @Data
 @Builder
 
 public class RendezVous {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private LocalDate date;
-    private byte heure; // Peut être remplacé par LocalTime si nécessaire
+    private LocalTime heure; // Peut être remplacé par LocalTime si nécessaire
     private String status;
     private Long idPatient;
     @OneToOne
@@ -52,11 +57,11 @@ public class RendezVous {
         this.date = date;
     }
 
-    public byte getHeure() {
+    public LocalTime getHeure() {
         return heure;
     }
 
-    public void setHeure(byte heure) {
+    public void setHeure(LocalTime heure) {
         this.heure = heure;
     }
 
@@ -87,7 +92,7 @@ public class RendezVous {
     public RendezVous() {
     }
 
-    public RendezVous(Long id, LocalDate date, byte heure, String status, Long idPatient, Consultation consultation) {
+    public RendezVous(Long id, LocalDate date, LocalTime heure, String status, Long idPatient, Consultation consultation) {
         this.id = id;
         this.date = date;
         this.heure = heure;

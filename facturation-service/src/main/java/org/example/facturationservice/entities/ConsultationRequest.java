@@ -9,10 +9,27 @@ import java.util.Set;
 
 public class ConsultationRequest {
     private Long id;
-    private String motif; // Correction du nom
+    private String motif;
+
+    private Long rendezVousId;
+
+    public ConsultationRequest(Long id, String motif, Long rendezVousId, BigDecimal montantTotal) {
+        this.id = id;
+        this.motif = motif;
+        this.rendezVousId = rendezVousId;
+        this.montantTotal = montantTotal;
+    }
 
     public BigDecimal getMontantTotal() {
         return montantTotal;
+    }
+
+    public Long getRendezVousId() {
+        return rendezVousId;
+    }
+
+    public void setRendezVousId(Long rendezVousId) {
+        this.rendezVousId = rendezVousId;
     }
 
     public void setMontantTotal(BigDecimal montantTotal) {
@@ -20,10 +37,6 @@ public class ConsultationRequest {
     }
 
     private BigDecimal montantTotal;
-    public ConsultationRequest(Long id, String motif) {
-        this.id = id;
-        this.motif = motif;
-    }
 
     public void setId(Long id) {
         this.id = id;

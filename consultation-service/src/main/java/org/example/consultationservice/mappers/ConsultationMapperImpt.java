@@ -31,6 +31,7 @@ public class ConsultationMapperImpt {
         return new ConsultationRequest(
                 consultation.getId(),
                 consultation.getMotif(),
+
                 consultation.getOrdonnance() != null ? consultation.getOrdonnance().getId() : null,
                 consultation.getRendezVous() != null ? consultation.getRendezVous().getId() : null,
                 (consultation.getFichesDeTraitement()==null)?BigDecimal.ZERO:

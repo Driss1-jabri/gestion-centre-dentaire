@@ -9,6 +9,7 @@ public record ConsultationRequest(
         Long ordonnanceId,
         Long rendezVousId,
         BigDecimal montantTotal
+
 ) {
     public ConsultationRequest {
     }

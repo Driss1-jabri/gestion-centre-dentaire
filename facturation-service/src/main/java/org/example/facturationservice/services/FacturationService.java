@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +40,19 @@ public class FacturationService {
         return factureRepository.save(facture);
     }
 
+    public Facture updateFacture(Long id, Facture updatedFacture) {
+        Facture existingFacture = factureRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Facture not found"));
+
+        existingFacture.setConsultationRequest(updatedFacture.getConsultationRequest());
+        existingFacture.setDate(updatedFacture.getDate());
+        existingFacture.setMontantTotal(updatedFacture.getMontantTotal());
+        existingFacture.setMontantPaye(updatedFacture.getMontantPaye());
+        existingFacture.setFinpaiement(updatedFacture.isFinpaiement());
+        existingFacture.setListPaiement(updatedFacture.getListPaiement());
+
+        return factureRepository.save(existingFacture);
+    }
     // UPDATE an existing paiement
     public Paiement updatePaiement(Long paiementId, Paiement updatedPaiement) {
         Paiement existingPaiement = paiementRepository.findById(paiementId)
@@ -54,8 +68,11 @@ public class FacturationService {
         return factureRepository.findById(id).orElseThrow(() -> new RuntimeException("Facture not found"));
     }
 
-    // DELETE a paiement by ID
-    public void deletePaiement(Long paiementId) {
-        paiementRepository.deleteById(paiementId);
+    public List<Facture> getAllFacture(){
+        return factureRepository.findAll();
+    }
+
+    public void deleteFacture(Long id) {
+        factureRepository.deleteById(id);
     }
 }
